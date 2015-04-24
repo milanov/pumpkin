@@ -7,13 +7,15 @@
 from sys import version
 import os
 from setuptools import setup
-import pumpkin
+#import pumpkin
 
 
-__version__ = pumpkin.VERSION
+__version__ = '0.3.1' #pumpkin.VERSION
 
 if version > '2.4' and version < '3.0':
-    requires=['argparse', 'cmd',  'copy', 'fcntl', 'hashlib',  'imp',  'inspect', 'json',  'logging',  'matplotlib.pyplot',  'networkx',  'os', 'pyinotify', 'Queue', 're', 'signal', 'socket', 'struct', 'subprocess' , 'sys',  'time', 'atexit',  'thread',  'threading', 'time', 'uuid', 'zmq']
+    # requires=['argparse', 'cmd',  'copy', 'fcntl', 'hashlib',  'imp',  'inspect', 'json',  'logging',  'matplotlib.pyplot',  'networkx',  'os', 'pyinotify', 'Queue', 're', 'signal', 'socket', 'struct', 'subprocess' , 'sys',  'time', 'atexit',  'thread',  'threading', 'time', 'uuid', 'zmq']
+    requires=['networkx', 'pyinotify', 'pystruct', 'tftpy', 'uuid', 'hashlib', 'pycmd', 'ujson', 'pika', 'netaddr', 'argparse', 'pyftpdlib', 'pyzmq', 'pystun']
+
 
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
@@ -32,6 +34,6 @@ setup(
     download_url='https://github.com/recap/pumpkin',
     package_dir={'pumpkin':'pumpkin'},
     packages=['pumpkin'],
-    requires=requires
+    install_requires=requires
 )
 
