@@ -21,19 +21,19 @@ class rx(Queue):
 
     def dig(self, pkt):
         #print "DIG: "+json.dumps(pkt)
-        if (pkt[0]["state"] == "TRANSIT") or (pkt[0]["state"] == "NEW"):
-            iplugins = PmkSeed.iplugins
-            keys = PmkSeed.iplugins.keys
-            l = len(pkt)
-            func = pkt[l-1]["func"]
-            #data = pkt[l-2]["data"]
+        #if (pkt[0]["state"] == "TRANSIT") or (pkt[0]["state"] == "NEW"):
+        #    iplugins = PmkSeed.iplugins
+        #    keys = PmkSeed.iplugins.keys
+        #    l = len(pkt)
+        #    func = pkt[l-1]["func"]
+        #    #data = pkt[l-2]["data"]
 
-            if ":" in func:
-                func = func.split(":")[1]
+        #    if ":" in func:
+        #        func = func.split(":")[1]
 
-            if func in keys():
-                klass = iplugins[func]
-                klass.look_ahead(pkt)
+        #    if func in keys():
+        #        klass = iplugins[func]
+        #        klass.look_ahead(pkt)
 
             pass
 
@@ -166,7 +166,7 @@ class RabbitMQMonitor():
             self.queue = queue
             self.exchange = exchange
             self.cnt = 0
-            self.channel.basic_qos(prefetch_count=1)
+            self.channel.basic_qos(prefetch_count=1000)
             #self.channel.exchange_declare(exchange=str(exchange), type='fanout')
             #self.channel.queue_declare(queue=str(queue))
             #self.channel.queue_bind(exchange=str(exchange),
@@ -345,7 +345,7 @@ class ZMQPacketMonitor(SThread):
         #context = zmq.Context()
         soc = self.zmq_cntx.socket(zmq.PULL)
         soc.setsockopt(zmq.RCVBUF, 2000)
-        #soc.setsockopt(zmq.HWM, 100)
+        soc.setsockopt(zmq.RCVHWM, 2000)
         try:
             soc.bind(self.bind_to)
         except zmq.ZMQError as e:
